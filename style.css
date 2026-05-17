@@ -1,0 +1,354 @@
+/* ─── Variables ─────────────────────────────────────── */
+:root {
+  --gold:   #c5a059;
+  --gold2:  #d4af37;
+  --cream:  #fdfbf7;
+  --warm:   #faf9f6;
+  --dark:   #1a1a1a;
+  --gray:   #7a7a7a;
+  --serif:  'Cormorant Garamond', serif;
+  --sans:   'Inter', sans-serif;
+  --ease:   cubic-bezier(.25,.46,.45,.94);
+}
+
+/* ─── Reset / Base ──────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--warm);
+  color: var(--dark);
+  font-family: var(--sans);
+  overflow-x: hidden;
+}
+
+.font-serif { font-family: var(--serif); }
+.font-sans  { font-family: var(--sans); }
+
+/* ─── Frosted glass util ────────────────────────────── */
+.frosted-glass {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.45);
+}
+
+/* ─── Gold button ───────────────────────────────────── */
+.btn-gold {
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  font-family: var(--sans);
+  font-weight: 500;
+  letter-spacing: .4px;
+  transition: background .3s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.btn-gold:hover {
+  background: var(--gold2);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(197,160,89,.35);
+}
+
+/* ─── Login overlay ─────────────────────────────────── */
+#login-overlay {
+  position: fixed; inset: 0;
+  background: linear-gradient(-45deg,var(--cream),#f7e7ce,var(--warm),#e8dcc4);
+  background-size: 400% 400%;
+  animation: gradBG 14s ease infinite;
+  z-index: 2000;
+  transition: opacity .7s ease;
+}
+/* Once JS hides the overlay, make absolutely sure it can't block anything */
+#login-overlay[style*="display: none"],
+#login-overlay[style*="display:none"] {
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+@keyframes gradBG {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.login-card {
+  border-radius: 22px;
+  width: 100%;
+  max-width: 380px;
+}
+.pin-input-group input {
+  font-size: 2rem;
+  letter-spacing: .5rem;
+  border-radius: 10px;
+  border: 1px solid #f7e7ce;
+  background: rgba(255,255,255,.9);
+  color: var(--dark);
+  width: 200px;
+  transition: box-shadow .3s;
+}
+.pin-input-group input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(197,160,89,.2);
+}
+
+/* ─── Navbar ────────────────────────────────────────── */
+.navbar {
+  padding: .9rem 0;
+  border-bottom: 1px solid rgba(0,0,0,.05);
+  z-index: 100;
+}
+.navbar-brand {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  color: var(--dark);
+  font-weight: 600;
+}
+
+/* ─── Hero ──────────────────────────────────────────── */
+.hero-section {
+  height: 80vh;
+  background: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+  position: relative;
+  margin-bottom: 3rem;
+}
+.hero-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.35);
+}
+.hero-content { position: relative; z-index: 1; }
+.text-shadow-soft { text-shadow: 0 4px 14px rgba(0,0,0,.3); }
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem; left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: .72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  z-index: 1;
+}
+.scroll-indicator .line {
+  width: 1px; height: 38px;
+  background: #fff;
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%    { transform: scaleY(0); transform-origin: top; }
+  50%   { transform: scaleY(1); transform-origin: top; }
+  50.1% { transform: scaleY(1); transform-origin: bottom; }
+  100%  { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+/* ─── Gallery grid ──────────────────────────────────── */
+#gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+@media (max-width: 576px) {
+  #gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─── Card ──────────────────────────────────────────── */
+/*
+  All children of .card are siblings, NOT nested inside each other.
+  This avoids the overflow:hidden nesting bug.
+*/
+.card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;               /* clips media AND overlays together */
+  aspect-ratio: 4 / 5;
+  background: #e8e8e8;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0,0,0,.12);
+  border-color: rgba(197,160,89,.55);
+}
+
+/* media fills the card */
+.card-media {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .7s var(--ease);
+}
+.card:hover .card-media {
+  transform: scale(1.06);
+}
+
+/* placeholder skeleton */
+.card-placeholder {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skel 1.4s infinite;
+}
+@keyframes skel {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* transparent click overlay — covers full card */
+.card-overlay {
+  position: absolute; inset: 0;
+  z-index: 2;           /* sits above media */
+  background: rgba(0,0,0,0);
+  transition: background .3s var(--ease);
+}
+.card:hover .card-overlay {
+  background: rgba(0,0,0,.18);
+}
+
+/* expand icon — centred */
+.ic-expand {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(.7);
+  z-index: 3;           /* above overlay */
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(6px);
+  border: 1.5px solid rgba(255,255,255,.5);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none; /* clicks fall through to .card-overlay */
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+.ic-expand svg { width: 22px; height: 22px; }
+.card:hover .ic-expand {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* download icon — top-right */
+.ic-download {
+  position: absolute;
+  top: 10px; right: 10px;
+  z-index: 3;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,.35);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity .3s var(--ease), background .25s var(--ease), transform .25s var(--ease);
+}
+.ic-download svg { width: 16px; height: 16px; }
+.card:hover .ic-download {
+  opacity: 1;
+}
+.ic-download:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: scale(1.12);
+}
+
+/* ─── Lightbox ──────────────────────────────────────── */
+#lightbox {
+  position: fixed; inset: 0;
+  z-index: 5000;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#lightbox.active { display: flex; }
+
+#lb-media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90vw;
+  max-height: 88vh;
+}
+
+.lb-media-el {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  animation: lbIn .3s var(--ease);
+}
+@keyframes lbIn {
+  from { opacity: 0; transform: scale(.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* spinner while loading */
+.lb-spinner {
+  width: 44px; height: 44px;
+  border: 3px solid rgba(255,255,255,.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* shared style for all lb buttons */
+#lb-close, #lb-prev, #lb-next, #lb-download {
+  position: absolute;
+  background: rgba(255,255,255,.14);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,.3);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .25s, transform .2s;
+}
+
+#lb-close {
+  top: 18px; right: 18px;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  line-height: 1;
+}
+#lb-close:hover { background: rgba(255,255,255,.28); transform: scale(1.1); }
+
+#lb-download {
+  top: 18px; right: 74px;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+}
+#lb-download svg { width: 20px; height: 20px; }
+#lb-download:hover { background: var(--gold); border-color: var(--gold); transform: scale(1.1); }
+
+#lb-prev {
+  left: 20px; top: 50%;
+  transform: translateY(-50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  font-size: 2.2rem;
+}
+#lb-next {
+  right: 20px; top: 50%;
+  transform: translateY(-50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  font-size: 2.2rem;
+}
+#lb-prev:hover, #lb-next:hover { background: var(--gold); border-color: var(--gold); }
+
+/* ─── Footer ────────────────────────────────────────── */
+.footer {
+  background: var(--cream);
+  border-top: 1px solid rgba(0,0,0,.05);
+}

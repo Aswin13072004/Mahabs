@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Captured Moments | Luxury Photography</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- PIN Login Overlay -->
+    <div
+      id="login-overlay"
+      class="d-flex justify-content-center align-items-center"
+    >
+      <div class="login-card p-5 text-center frosted-glass">
+        <h1 class="display-6 mb-4 font-serif">Client Access</h1>
+        <p class="text-muted mb-4 font-sans">
+          Please enter your 4-digit PIN to view the gallery.
+        </p>
+        <div class="pin-input-group mb-4">
+          <input
+            type="password"
+            id="pin-input"
+            maxlength="4"
+            class="form-control text-center mx-auto"
+            placeholder="••••"
+            autofocus
+          />
+        </div>
+        <button id="login-btn" class="btn btn-gold w-100 font-sans">
+          Enter Gallery
+        </button>
+        <p id="login-error" class="text-danger mt-3 mb-0" style="display: none">
+          Incorrect PIN
+        </p>
+      </div>
+    </div>
+
+    <!-- Main Content (hidden until login) -->
+    <div id="main-content" style="display: none">
+      <!-- Navbar -->
+      <nav class="navbar sticky-top frosted-glass">
+        <div class="container-fluid px-4">
+          <a class="navbar-brand font-serif" href="#">Captured Moments</a>
+          <div class="d-flex align-items-center gap-3"></div>
+        </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <header
+        class="hero-section d-flex align-items-center justify-content-center text-center"
+      >
+        <div class="hero-content">
+          <h1 class="display-1 font-serif text-white text-shadow-soft">
+            Stories Through Light
+          </h1>
+          <p class="lead font-sans text-white-50 mt-3">
+            A cinematic journey of memories.
+          </p>
+        </div>
+        <div class="scroll-indicator">
+          <span>Scroll</span>
+          <div class="line"></div>
+        </div>
+      </header>
+
+      <section class="container-fluid px-4 py-5">
+        <!-- Gallery Grid -->
+        <div id="gallery-grid">
+          <!-- Images will be injected here via JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="text-center py-5" style="display: none">
+          <h3 class="font-serif text-muted">No photos found</h3>
+          <p class="font-sans text-muted">Try a different search term.</p>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div
+          id="loading-spinner"
+          class="text-center py-5"
+          style="display: none"
+        >
+          <div class="spinner-border text-gold" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Load More Trigger -->
+        <div id="load-more-trigger" class="py-3"></div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer py-5 text-center mt-5">
+        <div class="container">
+          <h4 class="font-serif mb-3">Captured Moments Studio</h4>
+          <p class="font-sans text-muted small mb-0">
+            &copy; 2026 Captured Moments Studio. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+      <button id="lb-close">&times;</button>
+      <button id="lb-prev">&#8249;</button>
+      <button id="lb-next">&#8250;</button>
+      <button id="lb-download" title="Download">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </button>
+      <div id="lb-media"></div>
+    </div>
+
+    <!-- Toast for Progress -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+      <div
+        id="progress-toast"
+        class="toast align-items-center border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body font-sans" id="toast-message">
+            Action in progress...
+          </div>
+          <button
+            type="button"
+            class="btn-close me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
