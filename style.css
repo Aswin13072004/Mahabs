@@ -107,7 +107,7 @@ body {
 /* ─── Hero ──────────────────────────────────────────── */
 .hero-section {
   height: 80vh;
-  background: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+  background: url('https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJpZW5kcyUyMG1lbnxlbnwwfHwwfHx8MA%3D%3D') center/cover no-repeat;
   position: relative;
   margin-bottom: 3rem;
 }
